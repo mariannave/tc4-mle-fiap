@@ -1,7 +1,7 @@
 # Tech Challenge Fase 4 – Pós Graduação em Machine Learning
 
 
-## Time responsável
+## Equipe responsável
 
 - Beatriz do Nascimento Pessoa
 - Murilo Rebequi Coelho
@@ -49,6 +49,13 @@ docker run -p 8000:8000 tc4-api
 
 ```bash
 docker compose up --build
+```
+
+### Como rodar os testes
+
+```bash
+pip install -r requirements.txt
+pytest
 ```
 
 ### Endpoints
