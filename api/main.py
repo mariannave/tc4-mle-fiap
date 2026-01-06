@@ -6,6 +6,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from fastapi import FastAPI, HTTPException
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel, Field
 
 MODEL_PATH = Path("data/models/lstm_nvda.pt")
@@ -15,6 +16,8 @@ LOOKBACK = 30 # 30 preços
 HORIZON = 1
 
 app = FastAPI(title="LSTM Price Prediction API")
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
 
 
 class LSTMModel(nn.Module):

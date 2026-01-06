@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: "fastapi"
+    orgId: 1
+    folder: "Prediction API"
+    type: file
+    disableDeletion: true
+    updateIntervalSeconds: 10
+    options:
+      path: /etc/grafana/provisioning/dashboards

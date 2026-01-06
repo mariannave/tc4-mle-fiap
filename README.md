@@ -58,10 +58,35 @@ pip install -r requirements.txt
 pytest
 ```
 
+### Monitoramento (Prometheus + Grafana)
+
+Suba a API e, em seguida, inicie o stack de monitoramento:
+
+```bash
+docker compose -f docker-compose.monitoring.yml up
+```
+
+Ou, se estiver usando o `docker-compose` clássico:
+
+```bash
+docker-compose -f docker-compose.monitoring.yml up
+```
+
+Acessos:
+
+- Prometheus: `http://localhost:9090`
+- Grafana: `http://localhost:3000` (admin/admin)
+
+No macOS, o Prometheus já está apontando para `host.docker.internal:8000`.
+Em Linux, é necessário ajustar o target no arquivo `prometheus.yml` para o host correto.
+
+Foi criado um dashboard simples, chamado "Prediction API" na pasta "Prediction API".
+
 ### Endpoints
 
 - Health check: `GET /health`
 - Predição: `POST /predict`
+- Métricas Prometheus: `GET /metrics`
 
 ### Documentação
 

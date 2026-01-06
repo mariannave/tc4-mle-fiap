@@ -1,0 +1,49 @@
+groups:
+  - name: fastapi-alerts
+    rules:
+      - alert: FastApiHighErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="fastapi",status=~"5.."}[5m]))
+          /
+          sum(rate(http_requests_total{job="fastapi"}[5m]))
+          > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taxa de erro 5xx alta na API"
+          description: "Mais de 5% das requisicoes retornando 5xx nos ultimos 5m."
+
+      - alert: FastApiHighLatencyP95
+        expr: |
+          histogram_quantile(
+            0.95,
+            sum(rate(http_request_duration_seconds_bucket{job="fastapi"}[5m])) by (le)
+          )
+          > 1.0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Latencia p95 alta na API"
+          description: "p95 acima de 1s nos ultimos 5m."
+
+      - alert: FastApiHighCpu
+        expr: |
+          rate(process_cpu_seconds_total{job="fastapi"}[5m]) > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "CPU alta no processo da API"
+          description: "Uso de CPU sustentado acima de 0.8 cores por 10m."
+
+      - alert: FastApiHighMemory
+        expr: |
+          process_resident_memory_bytes{job="fastapi"} > 1e9
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Memoria alta no processo da API"
+          description: "Uso de memoria acima de 1GB por 10m."

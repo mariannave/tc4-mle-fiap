@@ -10,6 +10,7 @@ torch
 fastapi
 uvicorn[standard]
 pydantic
+prometheus-fastapi-instrumentator
 
 jupyter
 ipykernel
